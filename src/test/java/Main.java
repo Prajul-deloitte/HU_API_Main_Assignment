@@ -34,4 +34,38 @@ public class Main {
         }
 
     }
+
+    @Test
+    public void check_email_extension(){
+        RestAssured.useRelaxedHTTPSValidation();
+        Response response = given().
+        when().get("https://gorest.co.in/public/v1/users").
+        then().extract().response();
+
+        JSONObject obj = new JSONObject(response.asString());
+        JSONArray arr = obj.getJSONArray("data");
+
+        int count = 0;
+        for(int dom=0;dom<arr.length();dom++){
+            String extension = arr.getJSONObject(dom).get("email").toString();
+            //System.out.println(extension);
+            String temp = "";
+            for(int i=extension.length()-1;i>=0;i--){
+                if(extension.charAt(i)=='.'){
+                    break;
+                }
+                temp = temp + extension.charAt(i);
+            }//System.out.println(temp);
+            StringBuilder sb=new StringBuilder(temp);
+            sb.reverse();
+            temp = sb.toString();
+            //System.out.println(temp);
+            String req = "name";
+            if(temp.equals(req)){
+                count = count + 1;
+            }
+        }
+        assertThat(count,is(greaterThanOrEqualTo(2)));
+
+    }
 }
