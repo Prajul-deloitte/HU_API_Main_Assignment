@@ -3,6 +3,11 @@ import io.restassured.response.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -66,6 +71,47 @@ public class Main {
             }
         }
         assertThat(count,is(greaterThanOrEqualTo(2)));
+
+    }
+
+    @Test
+    public void unique_id(){
+        RestAssured.useRelaxedHTTPSValidation();
+        Response response = given().
+        when().get("https://gorest.co.in/public/v1/users").
+        then().extract().response();
+
+        JSONObject obj = new JSONObject(response.asString());
+        JSONArray arr = obj.getJSONArray("data");
+        int result = 1;
+        Set<Integer> ID = new HashSet<Integer>();
+
+        for(int traverse = 0;traverse<arr.length();traverse++){
+            int ids = (int)arr.getJSONObject(traverse).get("id");
+            //System.out.println(ids);
+            if(ID.contains(ids)){
+                result = 0;
+                System.out.println(ids);
+            }else {
+                ID.add(ids);
+            }
+        }
+        assertThat(result,is(equalTo(1)));
+
+    }
+
+    @Test
+    public void jsonSchemaValidation(){
+        RestAssured.useRelaxedHTTPSValidation();
+        given().
+                baseUri("https://gorest.co.in/public/v1/users").
+        when().get().
+        then().assertThat().body(matchesJsonSchemaInClasspath("json_schema.json")).statusCode(200);
+        /*Response response = given().
+        when().get("https://gorest.co.in/public/v1/users").
+        then().extract().response();
+        assertThat(response,matchesJsonSchemaInClasspath("json_schema.json")));*/
+
 
     }
 }
