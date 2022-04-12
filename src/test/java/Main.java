@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -113,5 +115,21 @@ public class Main {
         assertThat(response,matchesJsonSchemaInClasspath("json_schema.json")));*/
 
 
+    }
+
+    @Test
+    public void test_post_call() throws IOException {
+        RestAssured.useRelaxedHTTPSValidation();
+        ExcelManager excel = new ExcelManager();
+        int value = 2;
+        org.json.simple.JSONObject jd = excel.get_data(value);
+        given().
+                header("Authorization","Bearer 1e3fbfc04d510423f16db6b1976fb8d49a339e4e486ef5006ebe118b552a2a32").
+                header("Content-Type","application/json").
+                baseUri("https://gorest.co.in/public/v1/users").
+                body(jd).
+        when().
+                post().
+        then().statusCode(201);
     }
 }
