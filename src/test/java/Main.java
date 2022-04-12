@@ -16,7 +16,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static io.restassured.RestAssured.given;
 
 public class Main {
-    @Test
+
+    @Test(priority = 1)
     public void get_call(){
         RestAssured.useRelaxedHTTPSValidation();
         given().
@@ -27,12 +28,12 @@ public class Main {
 
     }
 
-    @Test
+    @Test(priority = 2)
     public void test_gender(){
         RestAssured.useRelaxedHTTPSValidation();
         Response response = given().
         when().get("https://gorest.co.in/public/v1/users").
-        then().extract().response();
+        then().statusCode(200).extract().response();
 
         JSONObject obj = new JSONObject(response.asString());
         JSONArray arr = obj.getJSONArray("data");
@@ -42,7 +43,7 @@ public class Main {
 
     }
 
-    @Test
+    @Test(priority = 3)
     public void check_email_extension(){
         RestAssured.useRelaxedHTTPSValidation();
         Response response = given().
@@ -67,7 +68,7 @@ public class Main {
             sb.reverse();
             temp = sb.toString();
             //System.out.println(temp);
-            String req = "name";
+            String req = "biz";
             if(temp.equals(req)){
                 count = count + 1;
             }
@@ -76,7 +77,7 @@ public class Main {
 
     }
 
-    @Test
+    @Test(priority = 4)
     public void unique_id(){
         RestAssured.useRelaxedHTTPSValidation();
         Response response = given().
@@ -102,7 +103,7 @@ public class Main {
 
     }
 
-    @Test
+    @Test(priority = 5)
     public void jsonSchemaValidation(){
         RestAssured.useRelaxedHTTPSValidation();
         given().
@@ -117,11 +118,11 @@ public class Main {
 
     }
 
-    @Test
+    @Test(priority = 6)
     public void test_post_call() throws IOException {
         RestAssured.useRelaxedHTTPSValidation();
         ExcelManager excel = new ExcelManager();
-        int value = 2;
+        int value = 3;
         org.json.simple.JSONObject jd = excel.get_data(value);
         given().
                 header("Authorization","Bearer 1e3fbfc04d510423f16db6b1976fb8d49a339e4e486ef5006ebe118b552a2a32").
@@ -133,11 +134,11 @@ public class Main {
         then().statusCode(201);
     }
 
-    @Test
+    @Test(priority = 7)
     public void test_existing_data_post_call() throws IOException {
         RestAssured.useRelaxedHTTPSValidation();
         ExcelManager excel = new ExcelManager();
-        int value = 2;
+        int value = 3;
         org.json.simple.JSONObject jd = excel.get_data(value);
 
         given().
