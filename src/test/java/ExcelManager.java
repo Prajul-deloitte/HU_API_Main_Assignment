@@ -32,7 +32,7 @@ public class ExcelManager {
         obj.put("gender", gender);
         obj.put("email", email);
         obj.put("status", status);
-        System.out.println(obj);
+        //System.out.println(obj);
         return obj;
     }
 }

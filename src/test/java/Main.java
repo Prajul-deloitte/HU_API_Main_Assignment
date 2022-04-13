@@ -17,6 +17,9 @@ import static io.restassured.RestAssured.given;
 
 public class Main {
 
+    String URL = "https://gorest.co.in/public/v1/users";
+    String token = "1e3fbfc04d510423f16db6b1976fb8d49a339e4e486ef5006ebe118b552a2a32";
+
     @Test(priority = 1)
     public void get_call(){
         RestAssured.useRelaxedHTTPSValidation();
@@ -32,7 +35,7 @@ public class Main {
     public void test_gender(){
         RestAssured.useRelaxedHTTPSValidation();
         Response response = given().
-        when().get("https://gorest.co.in/public/v1/users").
+        when().get(URL).
         then().statusCode(200).extract().response();
 
         JSONObject obj = new JSONObject(response.asString());
@@ -47,7 +50,7 @@ public class Main {
     public void check_email_extension(){
         RestAssured.useRelaxedHTTPSValidation();
         Response response = given().
-        when().get("https://gorest.co.in/public/v1/users").
+        when().get(URL).
         then().extract().response();
 
         JSONObject obj = new JSONObject(response.asString());
@@ -81,7 +84,7 @@ public class Main {
     public void unique_id(){
         RestAssured.useRelaxedHTTPSValidation();
         Response response = given().
-        when().get("https://gorest.co.in/public/v1/users").
+        when().get(URL).
         then().extract().response();
 
         JSONObject obj = new JSONObject(response.asString());
@@ -107,7 +110,7 @@ public class Main {
     public void jsonSchemaValidation(){
         RestAssured.useRelaxedHTTPSValidation();
         given().
-                baseUri("https://gorest.co.in/public/v1/users").
+                baseUri(URL).
         when().get().
         then().assertThat().body(matchesJsonSchemaInClasspath("json_schema.json")).statusCode(200);
         /*Response response = given().
@@ -127,7 +130,7 @@ public class Main {
         given().
                 header("Authorization","Bearer 1e3fbfc04d510423f16db6b1976fb8d49a339e4e486ef5006ebe118b552a2a32").
                 header("Content-Type","application/json").
-                baseUri("https://gorest.co.in/public/v1/users").
+                baseUri(URL).
                 body(jd).
         when().
                 post().
@@ -144,7 +147,7 @@ public class Main {
         given().
                 header("Authorization","Bearer 1e3fbfc04d510423f16db6b1976fb8d49a339e4e486ef5006ebe118b552a2a32").
                 header("Content-Type","application/json").
-                baseUri("https://gorest.co.in/public/v1/users").
+                baseUri(URL).
                 body(jd).
         when().
                 post().

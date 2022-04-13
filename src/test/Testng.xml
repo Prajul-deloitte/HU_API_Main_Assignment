@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <listeners>
+        <listener class-name="TestNGListener"></listener>
+    </listeners>
+    <test verbose="2" preserve-order="true" name="C:\Users\prajchaudhary\IdeaProjects\HU_API_Main_Assignment">
+
+        <classes>
+            <class name="Main"/>
+        </classes>
+    </test></suite>
