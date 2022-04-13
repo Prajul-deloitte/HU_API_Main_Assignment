@@ -5,7 +5,7 @@
     </Properties>
 
     <Appenders>
-        <RollingFile name="fileLogger"
+        <RollingFile name="File"
                      fileName="${basePath}/mylogs.log"
                      filePattern="${basePath}/app-%d{yyyy-MM-dd}.log">
             <PatternLayout>
@@ -22,10 +22,10 @@
     </Appenders>
     <Loggers>
         <logger name="main" level="trace">
-            <appender-ref ref="fileLogger" />
+            <appender-ref ref="File" />
         </logger>
         <Root level="info" additivity="false">
-            <appender-ref ref="fileLogger" />
+            <appender-ref ref="File" />
         </Root>
     </Loggers>
 </Configuration>
